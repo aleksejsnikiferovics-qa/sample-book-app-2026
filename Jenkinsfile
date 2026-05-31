@@ -1,53 +1,66 @@
 pipeline {
     agent any
-
     stages {
         stage('build') {
             steps {
-                echo "Building sample book app"
+                script{
+                    build()
+                }
             }
         }
-    }
-    stages {
         stage('deploy-dev') {
             steps {
-                echo "Deploying sample book app to development environment"
+                script{
+                    deploy("DEV")
+                }
             }
         }
-    }
-    stages {
         stage('test-dev') {
             steps {
-                echo "Testing sample book app in development environment"
+                script{
+                    test("DEV")
+                }
             }
         }
-    }
-    stages {
         stage('deploy-stg') {
             steps {
-                echo "Deploying sample book app to staging environment"
+                script{
+                    deploy("STG")
+                }
             }
         }
-    }
-    stages {
         stage('test-stg') {
             steps {
-                echo "Testing sample book app in staging environment"
+                script{
+                    test("STG")
+                }
             }
         }
-    }
-    stages {
-        stage('deploy-prod') {
+        stage('deploy-prd') {
             steps {
-                echo "Deploying sample book app to production environment"
+                script{
+                    deploy("PRD")
+                }
             }
         }
-    }
-    stages {
-        stage('test-prod') {
+        stage('test-prd') {
             steps {
-                echo "Testing sample book app in production environment"
+                script{
+                    test("PRD")
+                }
             }
         }
     }
+}
+
+def build(){
+    echo "Building sample-book-app.."
+}
+
+def deploy(String environment){
+    echo "Deployment to ${environment} environment.."
+}
+
+def test(String environment){
+    echo "Testing Sample Book App service on ${environment} environment..."
 }
